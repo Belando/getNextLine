@@ -12,98 +12,52 @@
 
 #include "get_next_line.h"
 
-int	found_newline(t_list *lst)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
-	while (lst)
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	if (!s)
+		return (0);
+	while (*s != '\0')
 	{
-		i = 0;
-		while (lst->str_buf[i] != '\0' && i < BUFFER_SIZE)
-		{
-			if (lst->str_buf[i] == '\n')
-				return (1);
-			i++;
-		}
-		lst = lst->next;
+		if (*s == c)
+			return ((char *)s);
+		s++;
 	}
 	return (0);
 }
 
-t_list	*lst_last(t_list *lst)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	if (lst == NULL)
+	size_t	index_s1;
+	size_t	index_s2;
+	char	*s3;
+
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char));
+		s1[0] = '\0';
+	}
+	if (!s2)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
-}
-
-void	str_cpy(t_list *lst, char *str)
-{
-	int		i;
-	int		k;
-
-	if (lst == NULL || str == NULL)
-		return ;
-	k = 0;
-	while (lst)
-	{
-		i = 0;
-		while (lst->str_buf[i] && lst->str_buf[i] != '\n')
-			str[k++] = lst->str_buf[i++];
-		if (lst->str_buf[i] == '\n')
-		{
-			str[k++] = '\n';
-			return ;
-		}
-		lst = lst->next;
-	}
-	str[k] = '\0';
-}
-
-int	len_until_newline(t_list *lst)
-{
-	int	len;
-	int	i;
-
-	len = 0;
-	while (lst)
-	{
-		i = 0;
-		while (lst->str_buf[i] != '\0')
-		{
-			len++;
-			if (lst->str_buf[i] == '\n')
-				return (len);
-			i++;
-		}
-		lst = lst->next;
-	}
-	return (len);
-}
-
-void	dealloc(t_list **lst, t_list *clean_node, char *buf)
-{
-	t_list	*actual;
-	t_list	*next;
-
-	if (lst == NULL)
-		return ;
-	actual = *lst;
-	while (actual)
-	{
-		next = actual->next;
-		free(actual->str_buf);
-		free(actual);
-		actual = next;
-	}
-	*lst = NULL;
-	if (clean_node != NULL && clean_node->str_buf[0] == '\0')
-	{
-		free(clean_node);
-		clean_node = NULL;
-	}
-	if (buf != NULL)
-		free(buf);
+	s3 = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	if (!s3)
+		return (NULL);
+	index_s1 = -1;
+	while (s1[++index_s1])
+		s3[index_s1] = s1[index_s1];
+	index_s2 = 0;
+	while (s2[index_s2])
+		s3[index_s1++] = s2[index_s2++];
+	s3[index_s1] = '\0';
+	free(s1);
+	return (s3);
 }

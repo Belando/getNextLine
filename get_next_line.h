@@ -21,21 +21,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
-{
-	char			*str_buf;
-	struct s_list	*next;
-}				t_list;
-
 char	*get_next_line(int fd);
-t_list	*lst_last(t_list *lst);
-void	str_cpy(t_list *lst, char *str);
-int		len_until_newline(t_list *lst);
-void	dealloc(t_list **lst, t_list *clean_node, char *buf);
-int		found_newline(t_list *lst);
-void	polish_list(t_list **lst);
-void	append(t_list **lst, char *buf, int fd);
-char	*get_lines(t_list *lst);
-void	create_list(t_list **lst, int fd);
+char	*ft_read_to_stash(int fd, char *stash);
+char	*ft_get_line(char *stash);
+char	*ft_new_stash(char *stash);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+size_t	ft_strlen(const char *str);
 
 #endif
