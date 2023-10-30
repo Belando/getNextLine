@@ -27,10 +27,13 @@ char	*ft_read_to_stash(int fd, char *stash)
 	char	*buffer;
 	int		read_bytes;
 
-	read_bytes = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
+	{
+		free (buffer);
 		return (NULL);
+	}
+	read_bytes = 1;
 	while (!ft_strchr(stash, '\n') && read_bytes > 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
@@ -66,7 +69,8 @@ char	*ft_get_line(char *stash)
 		return (NULL);
 	while (stash[index] != '\0' && stash[index] != '\n')
 		index++;
-	str = malloc(sizeof(char) * (index + 2));
+	size_t len = (stash[index] == '\n') ? index + 2 : index + 1;
+	str = malloc(sizeof(char) * len);
 	if (!str)
 		return (NULL);
 	index = 0;
@@ -107,7 +111,7 @@ char	*ft_new_stash(char *stash)
 		free(stash);
 		return (NULL);
 	}
-	str = malloc(sizeof(char) * (ft_strlen(stash) - i_stash + 1));
+	str = malloc(sizeof(char) * ft_strlen(stash) - i_stash);
 	if (!str)
 		return (NULL);
 	i_stash++;
