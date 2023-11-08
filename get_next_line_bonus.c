@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbelando <fbelando@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 15:45:19 by fbelando          #+#    #+#             */
-/*   Updated: 2023/10/23 15:45:26 by fbelando         ###   ########.fr       */
+/*   Created: 2023/11/08 18:32:57 by fbelando          #+#    #+#             */
+/*   Updated: 2023/11/08 18:32:59 by fbelando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_to_stash(int fd, char *stash)
 {
@@ -99,37 +99,15 @@ char	*ft_new_stash(char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[OPEN_MAX];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (NULL);
-	stash = ft_read_to_stash(fd, stash);
-	if (!stash)
+	stash[fd] = ft_read_to_stash(fd, stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	line = ft_get_line(stash);
-	stash = ft_new_stash(stash);
+	line = ft_get_line(stash[fd]);
+	stash[fd] = ft_new_stash(stash[fd]);
 	return (line);
 }
-
-/*int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("../test.txt", O_RDONLY);
-	printf("LINE.1-> %s", get_next_line(fd));
-	printf("----------------\n");
-	printf("LINE.2-> %s", get_next_line(fd));
-	printf("----------------\n");
-	printf("LINE.3-> %s", get_next_line(fd));
-	printf("----------------\n");
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		printf("LINE-> %s", line);
-	}
-	return (0);
-}*/
