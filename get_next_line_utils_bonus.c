@@ -35,10 +35,22 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
+char	*ft_strcpy(char *dest, const char *src)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	size_t	index_s1;
-	size_t	index_s2;
 	char	*s3;
 
 	if (!s1)
@@ -52,46 +64,12 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		return (NULL);
 	s3 = malloc(1 * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
 	if (!s3)
+	{
+		free (s1);
 		return (NULL);
-	index_s1 = -1;
-	while (s1[++index_s1])
-		s3[index_s1] = s1[index_s1];
-	index_s2 = 0;
-	while (s2[index_s2])
-		s3[index_s1++] = s2[index_s2++];
-	s3[index_s1] = '\0';
+	}
+	ft_strcpy(s3, s1);
+	ft_strcpy(s3 + ft_strlen(s1), s2);
 	free(s1);
 	return (s3);
 }
-
-/*
-int	main(void)
-{
-	int		fd1;
-	int		fd2;
-	int		fd3;
-	char	*line;
-	int		lines;
-
-	lines = 1;
-	fd1 = open("test/test.txt", O_RDONLY);
-	fd2 = open("test/test2.txt", O_RDONLY);
-	fd3 = open("test/test3.txt", O_RDONLY);
-	while (lines <= 5)
-	{
-		line = get_next_line(fd1);
-		printf("%d->%s\n", lines, line);
-		free(line);
-		line = get_next_line(fd2);
-		printf("%d->%s\n", lines, line);
-		free(line);
-		line = get_next_line(fd3);
-		printf("%d->%s\n", lines, line);
-		free(line);
-		lines++;
-	}
-	close(fd1);
-	close(fd2);
-	close(fd3);
-	return (0);
-}*/

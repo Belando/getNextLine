@@ -43,7 +43,7 @@ char	*ft_read_to_stash(int fd, char *stash)
 char	*ft_get_line(char *stash)
 {
 	int		index;
-	char	*str;
+	char	*line;
 
 	index = 0;
 	if (stash[index] == '\0')
@@ -51,21 +51,21 @@ char	*ft_get_line(char *stash)
 	while (stash[index] != '\0' && stash[index] != '\n')
 		index++;
 	if (stash[index] == '\n')
-		str = malloc(sizeof(char) * (index + 2));
+		line = malloc(sizeof(char) * (index + 2));
 	else
-		str = malloc(sizeof(char) * (index + 1));
-	if (!str)
+		line = malloc(sizeof(char) * (index + 1));
+	if (!line)
 		return (NULL);
 	index = 0;
 	while (stash[index] != '\0' && stash[index] != '\n')
 	{
-		str[index] = stash[index];
+		line[index] = stash[index];
 		index++;
 	}
 	if (stash[index] == '\n')
-		str[index++] = '\n';
-	str[index] = '\0';
-	return (str);
+		line[index++] = '\n';
+	line[index] = '\0';
+	return (line);
 }
 
 char	*ft_new_stash(char *stash)
