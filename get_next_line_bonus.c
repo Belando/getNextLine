@@ -117,3 +117,32 @@ char	*get_next_line(int fd)
 	stash[fd] = ft_new_stash(stash[fd]);
 	return (line);
 }
+
+/*int	main(void)
+{
+	int			i;
+	int			fd;
+	char		*line;
+	const char	*files[] = {"./test.txt", "./test2.txt", "./test3.txt"};
+
+	i = 0;
+
+	while (i < sizeof(files) / sizeof(files[0]))
+	{
+		fd = open(files[i], O_RDONLY);
+		if (fd < 0)
+		{
+			perror("open");
+			return (1);
+		}
+
+		while ((line = get_next_line(fd)) != NULL)
+		{
+			printf("%s\n", line);
+			free(line);
+		}
+		close(fd);
+		i++;
+	}
+	return (0);
+}*/

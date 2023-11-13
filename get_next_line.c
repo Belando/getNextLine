@@ -123,19 +123,12 @@ char	*get_next_line(int fd)
 	int		fd;
 	char	*line;
 
-	fd = open("../test.txt", O_RDONLY);
-	printf("LINE.1-> %s", get_next_line(fd));
-	printf("----------------\n");
-	printf("LINE.2-> %s", get_next_line(fd));
-	printf("----------------\n");
-	printf("LINE.3-> %s", get_next_line(fd));
-	printf("----------------\n");
-	while (1)
+	fd = open("./test.txt", O_RDONLY);
+	while ((line = get_next_line(fd)) != NULL)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
 		printf("LINE-> %s", line);
+		free (line);
 	}
+	close (fd);
 	return (0);
 }*/
