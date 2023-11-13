@@ -108,6 +108,12 @@ char	*get_next_line(int fd)
 	if (!stash[fd])
 		return (NULL);
 	line = ft_get_line(stash[fd]);
+	if (!line)
+	{
+		free (stash[fd]);
+		stash[fd] = NULL;
+		return (NULL);
+	}
 	stash[fd] = ft_new_stash(stash[fd]);
 	return (line);
 }

@@ -29,8 +29,8 @@ char	*ft_read_to_stash(int fd, char *stash)
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
 		{
-			free(buffer);
 			free(stash);
+			free(buffer);
 			return (NULL);
 		}
 		buffer[read_bytes] = '\0';
@@ -108,6 +108,12 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	line = ft_get_line(stash);
+	if (!line)
+	{
+		free (stash);
+		stash = NULL;
+		return (NULL);
+	}
 	stash = ft_new_stash(stash);
 	return (line);
 }
